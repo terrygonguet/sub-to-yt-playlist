@@ -1,11 +1,11 @@
 {
 	"extensionName": {
-		"message": "WIP",
+		"message": "YouTube Sub2Playlist",
 		"description": "Name of the extension."
 	},
 
 	"extensionDescription": {
-		"message": "WIP",
+		"message": "Easily check your added playlists for new videos. Early proof of concept.",
 		"description": "Description of the extension."
 	}
 }
