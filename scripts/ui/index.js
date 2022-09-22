@@ -97,10 +97,42 @@ const fragments = {
 		</style>
 	</div>`,
 	popup: html`<dialog id="sub2playlist-popup">
-		<div id="playlists"></div>
+		<div id="playlists">
+			<p style="text-align: center;margin-top: 5rem;font-size: 3rem;">Loading...</p>
+		</div>
+		<button
+			id="close"
+			style="all: initial;width: 5rem;height: 5rem;position: absolute;top: 1rem;right: 1rem;cursor: pointer;"
+		>
+			<svg
+				viewBox="0 0 24 24"
+				preserveAspectRatio="xMidYMid meet"
+				focusable="false"
+				style="pointer-events: none; display: block; width: 100%; height: 100%;fill: white;"
+				class="style-scope yt-icon"
+			>
+				<g class="style-scope yt-icon">
+					<path
+						d="M12.7,12l6.6,6.6l-0.7,0.7L12,12.7l-6.6,6.6l-0.7-0.7l6.6-6.6L4.6,5.4l0.7-0.7l6.6,6.6l6.6-6.6l0.7,0.7L12.7,12z"
+						class="style-scope yt-icon"
+					></path>
+				</g>
+			</svg>
+		</button>
 		<template id="playlist">
 			<div>
-				<a id="title" style="font-size: 2em">title</a>
+				<p
+					style="display: flex;align-items: center;gap: 1rem;font-size: 2em;font-weight: 500;"
+				>
+					<a id="title">title</a
+					><button
+						id="reverse"
+						style="all: initial;cursor: pointer;font-size: 2rem;"
+						title="Reverse playlist order"
+					>
+						🔁
+					</button>
+				</p>
 				<div
 					id="videos"
 					style="display: grid;gap: 1rem;overflow-x: auto;scrollbar-width: thin;grid-auto-columns: 250px;grid-auto-flow: column;padding: 0.5rem"
@@ -108,7 +140,24 @@ const fragments = {
 			</div>
 		</template>
 		<template id="video">
-			<div style="display: flex;flex-direction: column;gap: 0.5rem;">
+			<div class="sub2playlist-video">
+				<button id="watchlater">
+					<span style="font-weight: bold;color: white;">Added!</span>
+					<svg
+						viewBox="0 0 24 24"
+						preserveAspectRatio="xMidYMid meet"
+						focusable="false"
+						style="pointer-events: none; width: 100%; height: 100%;"
+						class="style-scope yt-icon"
+					>
+						<g class="style-scope yt-icon">
+							<path
+								d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9s9-4.04,9-9S16.96,3,12,3 M12,2c5.52,0,10,4.48,10,10s-4.48,10-10,10S2,17.52,2,12S6.48,2,12,2L12,2z"
+								class="style-scope yt-icon"
+							></path>
+						</g>
+					</svg>
+				</button>
 				<a id="videolink">
 					<img id="thumbnail" style="width: 100%" />
 					<span id="title">title</span>
@@ -124,7 +173,11 @@ const fragments = {
 				width: 90%;
 				height: 90%;
 				font-size: 1.2rem;
+				padding: 0;
+			}
+			#sub2playlist-popup * {
 				scrollbar-width: thin;
+				box-sizing: border-box;
 			}
 			#sub2playlist-popup::backdrop {
 				background-color: rgba(0, 0, 0, 0.25);
@@ -133,13 +186,14 @@ const fragments = {
 				display: flex;
 				flex-direction: column;
 				gap: 3rem;
+				overflow-y: auto;
+				height: 100%;
+				padding: 1rem;
 			}
-			#sub2playlist-popup #title {
+			#sub2playlist-popup span#title {
 				font-family: "Roboto", "Arial", sans-serif;
 				font-size: 1.4em;
-				/* line-height: 2em; */
 				font-weight: 500;
-				/* max-height: 4rem; */
 				overflow: hidden;
 				display: block;
 				-webkit-line-clamp: 2;
@@ -152,6 +206,39 @@ const fragments = {
 			#sub2playlist-popup a {
 				color: inherit;
 				text-decoration: none;
+			}
+			.sub2playlist-video {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				position: relative;
+			}
+			.sub2playlist-video #watchlater {
+				opacity: 0;
+				transition: opacity ease-in-out 0.3s;
+				background: rgba(30, 30, 30, 0.8);
+				/* width: 30px; */
+				height: 30px;
+				padding: 2px;
+				border-radius: 3px;
+				position: absolute;
+				top: 0.5rem;
+				right: 0.5rem;
+				border: 0;
+				fill: lightgray;
+				cursor: pointer;
+			}
+			.sub2playlist-video:hover #watchlater {
+				opacity: 1;
+			}
+			.sub2playlist-video #watchlater[data-added="true"] svg {
+				display: none;
+			}
+			.sub2playlist-video #watchlater span {
+				display: none;
+			}
+			.sub2playlist-video #watchlater[data-added="true"] span {
+				display: initial;
 			}
 		</style>
 	</dialog>`,
@@ -189,6 +276,8 @@ function ensureUIExists() {
 	}
 	if (!popup) {
 		popup = createElementFromHTML(fragments.popup)
+		popup.querySelector("#close").addEventListener("click", () => popup.close())
+		popup.addEventListener("close", () => document.body.style.removeProperty("overflow"))
 		document.body.append(popup)
 	}
 }
@@ -216,7 +305,6 @@ async function loadPlaylistPage() {
 	if (!popup) return
 	document.body.style.overflow = "hidden"
 	popup.showModal()
-	popup.addEventListener("close", () => document.body.style.removeProperty("overflow"))
 
 	const library = await youtube.getLibrary()
 	const playlists = await Promise.all(library.playlists.contents.map(massagePlaylist))
@@ -225,14 +313,24 @@ async function loadPlaylistPage() {
 	const videoEl = popup.querySelector("#video")
 	const playlistEl = popup.querySelector("#playlist")
 	const gridEl = popup.querySelector("#playlists")
+
 	gridEl.replaceChildren()
+
 	for (const playlist of playlists) {
 		const listClone = playlistEl.content.firstElementChild.cloneNode(true)
 		const titleEl = listClone.querySelector("#title")
 		titleEl.textContent = playlist.title
 		titleEl.href = `https://www.youtube.com/playlist?list=${playlist.id}`
 		const videosEl = listClone.querySelector("#videos")
-		for (const video of playlist.videos) {
+		listClone.querySelector("#reverse").addEventListener("click", () => {
+			const els = Array.from(videosEl.children).reverse()
+			els.forEach(el => {
+				el.remove()
+				videosEl.append(el)
+			})
+		})
+
+		for (const video of playlist.videos.slice().reverse()) {
 			const clone = videoEl.content.firstElementChild.cloneNode(true)
 			clone.querySelector("#videolink").href = `https://www.youtube.com/watch?v=${video.id}`
 			clone.querySelector("#thumbnail").src = video.thumbnail.url
@@ -240,8 +338,20 @@ async function loadPlaylistPage() {
 			const authorEl = clone.querySelector("#author")
 			authorEl.textContent = video.author.name
 			authorEl.href = video.author.url
+			const watchLaterEl = clone.querySelector("#watchlater")
+			watchLaterEl.addEventListener("click", () => {
+				if (watchLaterEl.dataset.added)
+					youtube.playlist
+						.removeVideos("WL", [video.id])
+						.then(() => delete watchLaterEl.dataset.added)
+				else
+					youtube.playlist
+						.addVideos("WL", [video.id])
+						.then(() => (watchLaterEl.dataset.added = true))
+			})
 			videosEl.append(clone)
 		}
+
 		gridEl.append(listClone)
 	}
 }
