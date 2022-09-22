@@ -15,12 +15,8 @@
 
 	"content_scripts": [
 		{
-			"matches": ["*://www.youtube.com/playlist*"],
-			"js": ["scripts/playlist/loader.js"]
-		},
-		{
 			"matches": ["*://www.youtube.com/*"],
-			"js": ["scripts/ui.js"]
+			"js": ["scripts/ui/loader.js"]
 		}
 	],
 
