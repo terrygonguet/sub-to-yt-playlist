@@ -30,6 +30,6 @@
 		"scripts/playlist/index.js",
 		"scripts/playlist/loader.js",
 		"vendor/youtubei.js",
-		"vendor/youtubei.min.js"
+		"ui/dist/ui.js"
 	]
 }
