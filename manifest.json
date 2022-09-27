@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"default_locale": "en",
-	"version": "0.0.1",
+	"version": "0.0.2",
 
 	"name": "__MSG_extensionName__",
 	"description": "__MSG_extensionDescription__",
@@ -29,7 +29,6 @@
 	"web_accessible_resources": [
 		"scripts/playlist/index.js",
 		"scripts/playlist/loader.js",
-		"vendor/youtubei.js",
 		"ui/dist/ui.js"
 	]
 }

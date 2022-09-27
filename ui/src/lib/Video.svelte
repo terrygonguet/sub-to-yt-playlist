@@ -15,7 +15,7 @@
 	$: videoURL = `https://www.youtube.com/watch?v=${id}`
 </script>
 
-<div class="sub2playlist-video">
+<div class="sub2lists-video">
 	<a href={videoURL}>
 		<div id="thumbnail">
 			<button id="watchlater" title="Add to watch later">
@@ -43,7 +43,7 @@
 </div>
 
 <style>
-	.sub2playlist-video {
+	.sub2lists-video {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
@@ -79,16 +79,16 @@
 		font-weight: bold;
 		color: white;
 	}
-	.sub2playlist-video:hover #watchlater {
+	.sub2lists-video:hover #watchlater {
 		opacity: 1;
 	}
-	.sub2playlist-video #watchlater[data-added="true"] svg {
+	.sub2lists-video #watchlater[data-added="true"] svg {
 		display: none;
 	}
-	.sub2playlist-video #watchlater span {
+	.sub2lists-video #watchlater span {
 		display: none;
 	}
-	.sub2playlist-video #watchlater[data-added="true"] span {
+	.sub2lists-video #watchlater[data-added="true"] span {
 		display: initial;
 	}
 	#thumbnail {

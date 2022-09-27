@@ -1,12 +1,5 @@
-const script = document.querySelector("#sub2list")
-const youtubeiURL = script.dataset.youtubeiURL
+const script = document.querySelector("#sub2lists")
 const uiURL = script.dataset.uiURL
-
-const { Innertube } = await import(youtubeiURL)
-const youtube = await Innertube.create({
-	cookie: document.cookie,
-	fetch: (...args) => fetch(...args),
-})
 
 /** @type {typeof import("../../ui/dist/ui.js")} */
 const { Modal, MenuItem, MenuItemMini } = await import(uiURL)
@@ -14,11 +7,11 @@ const { Modal, MenuItem, MenuItemMini } = await import(uiURL)
 function ensureUIExists() {
 	const isLoggedIn = document.querySelectorAll("[aria-label='Sign in']").length == 0
 	/** @type {MenuItem | null} */
-	let menuItem = document.querySelector("#sub2playlist-menuitem")
+	let menuItem = document.querySelector("#sub2lists-menuitem")
 	/** @type {MenuItemMini | null} */
-	let menuItemMini = document.querySelector("#sub2playlist-menuitem-mini")
+	let menuItemMini = document.querySelector("#sub2lists-menuitem-mini")
 	/** @type {Modal | null} */
-	let popup = document.querySelector("#sub2playlist-popup")
+	let popup = document.querySelector("#sub2lists-popup")
 	if (!isLoggedIn) {
 		menuItem?.$destroy()
 		menuItemMini?.$destroy()

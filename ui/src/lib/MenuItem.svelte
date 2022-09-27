@@ -1,4 +1,4 @@
-<div id="sub2playlist-menuitem" class="title ytd-guide-entry-renderer">
+<div id="sub2lists-menuitem" class="title ytd-guide-entry-renderer">
 	<a
 		href="/feed/playlists"
 		class="yt-simple-endpoint style-scope ytd-guide-entry-renderer"

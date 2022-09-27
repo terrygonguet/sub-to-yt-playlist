@@ -21,7 +21,7 @@
 	let playlists = new Promise(() => {})
 </script>
 
-<dialog id="sub2playlist-popup" bind:this={dialog} on:close={hide}>
+<dialog id="sub2lists-popup" bind:this={dialog} on:close={hide}>
 	<div id="playlists">
 		{#await playlists}
 			<p>Loading...</p>

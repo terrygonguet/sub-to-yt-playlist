@@ -1,4 +1,4 @@
-<div id="sub2playlist-menuitem-mini" class="style-scope ytd-mini-guide-renderer">
+<div id="sub2lists-menuitem-mini" class="style-scope ytd-mini-guide-renderer">
 	<a
 		id="endpoint"
 		class="yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer"
