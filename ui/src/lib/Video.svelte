@@ -37,7 +37,7 @@
 			<img src={thumbnail.url} alt={title} />
 			<span id="duration">{duration}</span>
 		</div>
-		<span id="title">{title}</span>
+		<span id="title" {title}>{title}</span>
 		<a id="author" href={author.url}>{author.name}</a>
 	</a>
 </div>
