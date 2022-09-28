@@ -4,14 +4,15 @@ const uiURL = script.dataset.uiURL
 /** @type {typeof import("../../ui/dist/ui.js")} */
 const { Modal, MenuItem, MenuItemMini } = await import(uiURL)
 
+/** @type {MenuItem | null} */
+let menuItem
+/** @type {MenuItemMini | null} */
+let menuItemMini
+/** @type {Modal | null} */
+let popup
+
 function ensureUIExists() {
 	const isLoggedIn = document.querySelectorAll("[aria-label='Sign in']").length == 0
-	/** @type {MenuItem | null} */
-	let menuItem = document.querySelector("#sub2lists-menuitem")
-	/** @type {MenuItemMini | null} */
-	let menuItemMini = document.querySelector("#sub2lists-menuitem-mini")
-	/** @type {Modal | null} */
-	let popup = document.querySelector("#sub2lists-popup")
 	if (!isLoggedIn) {
 		menuItem?.$destroy()
 		menuItemMini?.$destroy()
