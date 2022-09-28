@@ -2,10 +2,10 @@
 	import Video from "./Video.svelte"
 
 	/** @typedef {import("./data").Video} Video */
-	// /** @typedef {import("./data").Author} Author */
+	/** @typedef {import("./data").Author} Author */
 
-	// /** @type {Author} */
-	// export let author
+	/** @type {Author} */
+	export let author
 	/** @type {string} */
 	export let title
 	/** @type {string} */
@@ -22,7 +22,7 @@
 
 <div>
 	<p id="title">
-		<a href={playlistURL}>{title}</a>
+		<a href={playlistURL}>{title}</a> - <a href={author.url}>by {author.name}</a>
 		<button id="reverse" title="Reverse playlist order" on:click={reverse}>🔁</button>
 	</p>
 	<div id="videos">
