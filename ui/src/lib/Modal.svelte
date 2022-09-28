@@ -31,7 +31,7 @@
 		<menu slot="tabs" let:selected let:select>
 			<button
 				class="tab"
-				class:selected={selected == "playlists"}
+				class:selected={false && selected == "playlists"}
 				on:click={select("playlists")}
 				autofocus
 			>
@@ -109,7 +109,8 @@
 		display: grid;
 		place-items: center;
 	}
-	.selected {
+	.selected,
+	menu button:hover {
 		background-color: var(--yt-spec-badge-chip-background);
 	}
 
