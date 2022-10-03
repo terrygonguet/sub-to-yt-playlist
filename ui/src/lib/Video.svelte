@@ -1,4 +1,6 @@
 <script>
+	import { addToWatchLater, removeFromWatchLater } from "./data"
+
 	/** @typedef {import("./data").Author} Author */
 
 	/** @type {Author} */
@@ -13,12 +15,25 @@
 	export let thumbnail
 
 	$: videoURL = `https://www.youtube.com/watch?v=${id}`
+
+	/**
+	 * @this {HTMLButtonElement}
+	 */
+	async function watchLater() {
+		if (this.dataset.added) {
+			await removeFromWatchLater(id)
+			delete this.dataset.added
+		} else {
+			await addToWatchLater(id)
+			this.dataset.added = "true"
+		}
+	}
 </script>
 
 <div class="sub2lists-video">
 	<a href={videoURL}>
 		<div id="thumbnail">
-			<button id="watchlater" title="Add to watch later">
+			<button id="watchlater" title="Add to watch later" on:click|preventDefault={watchLater}>
 				<span>Added!</span>
 				<svg
 					viewBox="0 0 24 24"
@@ -62,6 +77,7 @@
 		text-overflow: ellipsis;
 		white-space: normal;
 	}
+
 	#watchlater {
 		opacity: 0;
 		transition: opacity ease-in-out 0.15s;
@@ -91,6 +107,10 @@
 	.sub2lists-video #watchlater[data-added="true"] span {
 		display: initial;
 	}
+	#watchlater span {
+		margin: 0 3px;
+	}
+
 	#thumbnail {
 		position: relative;
 	}

@@ -38,6 +38,22 @@ export async function fetchData() {
 }
 
 /**
+ * @param {string} id
+ */
+export async function addToWatchLater(id) {
+	const youtube = await innerTube
+	await youtube.playlist.addVideos("WL", [id])
+}
+
+/**
+ * @param {string} id
+ */
+export async function removeFromWatchLater(id) {
+	const youtube = await innerTube
+	await youtube.playlist.removeVideos("WL", [id])
+}
+
+/**
  * @returns {Promise<Playlist>}
  */
 async function massagePlaylist(source) {
