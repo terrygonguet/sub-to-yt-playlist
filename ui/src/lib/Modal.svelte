@@ -3,7 +3,7 @@
 	import TabView from "./TabView.svelte"
 	import CloseIcon from "~icons/eva/close-fill"
 	import ListIcon from "~icons/eva/list-fill"
-	import SettingsIcon from "~icons/eva/settings-2-outline"
+	// import SettingsIcon from "~icons/eva/settings-2-outline"
 	import Playlists from "./Playlists.svelte"
 	import Settings from "./Settings.svelte"
 
@@ -66,6 +66,18 @@
 </dialog>
 
 <style>
+	:global(#sub2lists-popup *::-webkit-scrollbar) {
+		width: 9px;
+		height: 9px;
+	}
+	:global(#sub2lists-popup *::-webkit-scrollbar-track) {
+		background: transparent;
+	}
+	:global(#sub2lists-popup *::-webkit-scrollbar-thumb) {
+		background-color: rgba(155, 155, 155, 0.5);
+		border: transparent;
+	}
+
 	dialog {
 		position: fixed;
 		background: var(--yt-spec-general-background-a);
