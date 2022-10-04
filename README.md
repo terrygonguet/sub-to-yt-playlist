@@ -25,4 +25,6 @@ Use the `-v` or `--verbose` flag to turn on detailed logging.
 
 Use the `-s` or `--skip-build` flag to skip building the UI bundle and only package the extension.
 
+Use the `--mv2` and `--mv3` flags to build only for manifest V2 or V3 respectively.
+
 The `dist.js` folder now contains all the extension files.
