@@ -1,6 +1,6 @@
 // ES module importing rigamarole because of reasons
-const uiURL = chrome.runtime.getURL("ui/dist/ui.js")
-const indexURL = chrome.runtime.getURL("scripts/ui/index.mjs")
+const uiURL = chrome.runtime.getURL("scripts/ui.js")
+const indexURL = chrome.runtime.getURL("scripts/index.mjs")
 const script = document.createElement("script")
 script.src = indexURL
 script.type = "module"
