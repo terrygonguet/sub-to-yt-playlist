@@ -19,4 +19,8 @@ chmod +x ./build.mjs
 ./build.mjs
 ```
 
+Use the `-v` or `--verbose` flag to turn on detailed logging.
+
+Use the `-s` or `--skip-build` flag to skip building the UI bundle and only package the extension.
+
 The `dist.js` folder now contains all the extension files.
