@@ -1,7 +1,7 @@
 const script = document.querySelector("#sub2lists")
 const uiURL = script.dataset.uiURL
 
-/** @type {typeof import("../../ui/dist/ui.js")} */
+/** @type {typeof import("../ui/dist/ui.js")} */
 const { Modal, MenuItem, MenuItemMini } = await import(uiURL)
 
 /** @type {MenuItem | null} */

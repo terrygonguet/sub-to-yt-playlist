@@ -10,6 +10,8 @@ export default defineConfig({
 			entry: "src/main.js",
 			formats: ["es"],
 		},
+		outDir: "../dist/scripts",
+		emptyOutDir: false,
 	},
 	server: {
 		hmr: false,

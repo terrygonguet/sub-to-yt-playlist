@@ -1,10 +1,6 @@
 export const version = "1.0.0"
 
-export const web_accessible_resources = [
-	"scripts/ui/index.mjs",
-	"scripts/ui/loader.js",
-	"ui/dist/ui.js",
-]
+export const web_accessible_resources = ["scripts/index.mjs", "scripts/loader.js", "scripts/ui.js"]
 
 export const browser_specific_settings = {
 	gecko: {
@@ -28,23 +24,23 @@ export const base = {
 	content_scripts: [
 		{
 			matches: ["*://www.youtube.com/*"],
-			js: ["scripts/ui/loader.js"],
+			js: ["scripts/loader.js"],
 		},
 	],
 }
 
 export const manifest_v2 = {
 	manifest_version: 2,
-	...base,
 	version,
+	...base,
 	browser_specific_settings,
 	web_accessible_resources,
 }
 
 export const manifest_v3 = {
 	manifest_version: 3,
-	...base,
 	version,
+	...base,
 	web_accessible_resources: [
 		{
 			resources: web_accessible_resources,
