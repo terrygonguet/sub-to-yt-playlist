@@ -1,4 +1,6 @@
-# Sub2playlists proof of concept
+# Subscribe to YouTube Playlists
+
+Easily check your added playlists for new videos!
 
 ## Structure
 

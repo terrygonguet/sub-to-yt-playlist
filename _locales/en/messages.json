@@ -1,11 +1,11 @@
 {
 	"extensionName": {
-		"message": "YouTube Sub2Playlist",
+		"message": "Subscribe to YouTube Playlists",
 		"description": "Name of the extension."
 	},
 
 	"extensionDescription": {
-		"message": "Easily check your added playlists for new videos. Early proof of concept.",
+		"message": "Easily check your added playlists for new videos.",
 		"description": "Description of the extension."
 	}
 }

@@ -20,8 +20,8 @@ if (!argv.s && !argv["skip-build"]) {
 	})
 }
 
-const { manifest_v2, manifest_v3 } = await import("./manifest.mjs")
-const args = ["-i ui", "-s dist", "-o"]
+const { manifest_v2, manifest_v3, version } = await import("./manifest.mjs")
+const args = ["-s dist", "-o", `-n youtube_sub2playlist-${version}.zip`]
 
 echo(colorize("Building manifest V3 extension..."))
 await fs.writeJSON("dist/manifest.json", manifest_v3, { spaces: "\t" })
