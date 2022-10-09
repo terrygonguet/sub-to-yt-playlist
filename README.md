@@ -2,6 +2,10 @@
 
 Easily check your added playlists for new videos!
 
+## Install
+
+This extension is available for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/youtube-sub2playlist/) and [any Chrome-like browser](https://chrome.google.com/webstore/detail/subscribe-to-youtube-play/iiidhbnhammhbfmaigembfdlmaeabgfl) (Chrome, Brave, Edge etc...)
+
 ## Structure
 
 All the interface and data fetching in this extension is done in [Svelte](https://svelte.dev/), built by [vite](https://vitejs.dev/). The source files are in the `ui` directory along with everything needed to build the UI bundle.
