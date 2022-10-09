@@ -1,5 +1,7 @@
-## 1.0.2
+## 1.1.0
 
+-   Add "Feed" tab to look like the Subscriptions feed
+-   Add check to choose what tab to open by default
 -   Fixed mini menu item not showing up or appearing a million times sometimes
 
 ## 1.0.1

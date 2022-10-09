@@ -1,6 +1,6 @@
 <script>
 	import Playlist from "./Playlist.svelte"
-	import { hiddenIDs } from "./stores"
+	import { defaultTab, hiddenIDs } from "./stores"
 	import EyeIcon from "~icons/eva/eye-outline"
 
 	/** @type {import("./data").Playlist[]} */
@@ -17,6 +17,11 @@
 </script>
 
 <div id="playlists">
+	<label id="default-tab" on:click={() => ($defaultTab = "playlist")}>
+		Make this the default tab
+		<input type="checkbox" disabled checked={$defaultTab == "playlists"} />
+	</label>
+
 	{#each processed as playlist (playlist.id)}
 		<Playlist {...playlist} />
 	{:else}
@@ -41,6 +46,11 @@
 		overflow-y: auto;
 		height: 100%;
 		padding: 2rem 1rem;
+	}
+	#default-tab {
+		align-self: flex-end;
+		cursor: pointer;
+		margin-bottom: -2rem;
 	}
 	p {
 		color: var(--yt-spec-text-primary);

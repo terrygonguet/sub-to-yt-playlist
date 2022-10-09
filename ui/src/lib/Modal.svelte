@@ -12,6 +12,7 @@
 
 	export const show = () => {
 		dialog.showModal()
+		selected = $defaultTab
 		promise = fetchData()
 		document.body.style.overflow = "hidden"
 	}
@@ -24,6 +25,9 @@
 		return getPlaylists()
 	}
 
+	/** @type {string} */
+	let selected
+
 	/** @type {HTMLDialogElement} */
 	let dialog
 
@@ -32,7 +36,7 @@
 </script>
 
 <dialog id="sub2lists-popup" bind:this={dialog} on:close={hide}>
-	<TabView initial={$defaultTab}>
+	<TabView initial={$defaultTab} bind:selected>
 		<menu slot="tabs" let:selected let:select>
 			<button
 				class="tab"
@@ -67,6 +71,7 @@
 					<!-- <Settings /> -->
 				{/if}
 			{:catch error}
+				{@debug error}
 				<p class="message">Error!</p>
 			{/await}
 		</svelte:fragment>
@@ -85,6 +90,10 @@
 		background-color: rgba(155, 155, 155, 0.5);
 		border: transparent;
 	}
+	:global(dialog *) {
+		scrollbar-width: thin;
+		box-sizing: border-box;
+	}
 
 	dialog {
 		position: fixed;
@@ -96,10 +105,6 @@
 		font-size: 1.2rem;
 		padding: 0;
 		overflow: hidden;
-	}
-	dialog * {
-		scrollbar-width: thin;
-		box-sizing: border-box;
 	}
 	dialog::backdrop {
 		background-color: rgba(0, 0, 0, 0.25);

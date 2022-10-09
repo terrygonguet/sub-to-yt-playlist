@@ -15,3 +15,6 @@ export const reversedIDs = syncable("reversedIDs", [])
 
 /** @type {Writable<string>} */
 export const defaultTab = syncable("defaultTab", "playlists")
+
+/** @type {Writable<Object<string, import("./data").DetailedVideo>>} */
+export const cachedVideos = syncable("cachedVideos", {})

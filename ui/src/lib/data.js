@@ -1,4 +1,5 @@
 import { Innertube } from "youtubei.js"
+import { seconds2str } from "./utils"
 
 /**
  * @typedef {Object} Playlist
@@ -20,7 +21,7 @@ import { Innertube } from "youtubei.js"
 /**
  * @typedef {Object} DetailedVideo
  * @property {Author} author
- * @property {number} duration
+ * @property {string} duration
  * @property {string} id
  * @property {{ url: string }} thumbnail
  * @property {string} title
@@ -62,11 +63,12 @@ export async function removeFromWatchLater(id) {
 
 /**
  * @param {Playlist[]} playlists
+ * @param {Object<string, DetailedVideo>} cache
  */
-export async function getVideos(playlists) {
+export async function getVideos(playlists, cache = {}) {
 	const videoIds = playlists.flatMap(p => p.videos).map(v => v.id)
 	const videos = await Promise.all(
-		videoIds.map(id => youtube.getInfo(id).then(massageDetailedVideo)),
+		videoIds.map(id => cache[id] ?? youtube.getInfo(id).then(massageDetailedVideo)),
 	)
 	return videos
 }
@@ -92,7 +94,7 @@ function massageVideo(source) {
 		author: massageAuthor(source.author),
 		duration: source.duration.text,
 		id: source.id,
-		thumbnail: source.thumbnails[1],
+		thumbnail: pickThumbnail(source.thumbnails),
 		title: source.title.text,
 	}
 }
@@ -115,9 +117,19 @@ function massageDetailedVideo(source) {
 	return {
 		id: source.basic_info.id,
 		title: source.basic_info.title,
-		duration: source.basic_info.duration,
-		thumbnail: source.basic_info.thumbnail[1],
+		duration: seconds2str(source.basic_info.duration),
+		thumbnail: pickThumbnail(source.basic_info.thumbnail),
 		author: source.basic_info.channel,
 		published: new Date(source.primary_info.published.text),
 	}
+}
+
+/**
+ * The 1st one is too hi def but the second one is sometimes 4:3
+ * @param {{ width: number, height: number, url: string }[]} thumbs
+ */
+function pickThumbnail(thumbs) {
+	const second = thumbs[1]
+	const ratio = second.width / second.height
+	return 1.7777777 - ratio > 0.1 ? thumbs[0] : second
 }

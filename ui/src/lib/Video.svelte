@@ -13,6 +13,8 @@
 	export let duration
 	/** @type {any} */
 	export let thumbnail
+	/** @type {Date | undefined} */
+	export let published = undefined
 
 	$: videoURL = `https://www.youtube.com/watch?v=${id}`
 
@@ -27,6 +29,14 @@
 			await addToWatchLater(id)
 			this.dataset.added = "true"
 		}
+	}
+
+	const formatter = new Intl.DateTimeFormat([], { dateStyle: "medium" })
+	/**
+	 * @param {Date} date
+	 */
+	function format(date) {
+		return formatter.format(date)
 	}
 </script>
 
@@ -54,16 +64,23 @@
 		</div>
 		<span id="title" {title}>{title}</span>
 		<a id="author" href={author.url}>{author.name}</a>
+		{#if published}
+			<span>{format(published)}</span>
+		{/if}
 	</a>
 </div>
 
 <style>
 	.sub2lists-video {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
 		position: relative;
 	}
+
+	.sub2lists-video > a {
+		display: flex;
+		flex-direction: column;
+		gap: 0.7rem;
+	}
+
 	#title {
 		font-family: "Roboto", "Arial", sans-serif;
 		font-size: 1.4em;
