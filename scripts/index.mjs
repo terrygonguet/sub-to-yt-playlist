@@ -19,12 +19,12 @@ function ensureUIExists() {
 		return
 	}
 	const container = document.querySelector("#sections #items")
-	if (!container.querySelector("#sub2lists-menuitem") && container) {
+	if (container && !container.querySelector("#sub2lists-menuitem")) {
 		menuItem = new MenuItem({ target: container, anchor: container.lastChild })
 		menuItem.$on("click", () => popup.show())
 	}
 	const containerMini = document.querySelector("ytd-mini-guide-renderer #items")
-	if (!container.querySelector("#sub2lists-menuitem-mini") && containerMini) {
+	if (containerMini && !containerMini.querySelector("#sub2lists-menuitem-mini")) {
 		menuItemMini = new MenuItemMini({ target: containerMini, anchor: containerMini.lastChild })
 		menuItemMini.$on("click", () => popup.show())
 	}
