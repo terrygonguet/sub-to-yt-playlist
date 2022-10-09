@@ -16,22 +16,32 @@
 	}
 </script>
 
-{#each processed as playlist (playlist.id)}
-	<Playlist {...playlist} />
-{:else}
-	<!-- TODO: Add tutorial -->
-{/each}
-{#if numHidden > 0 && !showHidden}
-	<p>
-		Plus {numHidden} hidden playlist(s)
-		<button on:click={toggleHidden}>
-			<EyeIcon />
-			Show
-		</button>
-	</p>
-{/if}
+<div id="playlists">
+	{#each processed as playlist (playlist.id)}
+		<Playlist {...playlist} />
+	{:else}
+		<!-- TODO: Add tutorial -->
+	{/each}
+	{#if numHidden > 0 && !showHidden}
+		<p>
+			Plus {numHidden} hidden playlist(s)
+			<button on:click={toggleHidden}>
+				<EyeIcon />
+				Show
+			</button>
+		</p>
+	{/if}
+</div>
 
 <style>
+	#playlists {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+		overflow-y: auto;
+		height: 100%;
+		padding: 2rem 1rem;
+	}
 	p {
 		color: var(--yt-spec-text-primary);
 		font-size: 2em;

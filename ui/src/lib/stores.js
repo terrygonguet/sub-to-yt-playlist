@@ -12,3 +12,6 @@ export const hiddenIDs = syncable("hiddenIDs", [])
 
 /** @type {Writable<string[]>} */
 export const reversedIDs = syncable("reversedIDs", [])
+
+/** @type {Writable<string>} */
+export const defaultTab = syncable("defaultTab", "playlists")

@@ -1,15 +1,18 @@
 <script>
-	import { fetchData } from "./data"
+	import { getPlaylists } from "./data"
+	import { defaultTab } from "./stores"
 	import TabView from "./TabView.svelte"
 	import CloseIcon from "~icons/eva/close-fill"
 	import ListIcon from "~icons/eva/list-fill"
+	import PlaylistIcon from "./svg/PlaylistIcon.svelte"
 	// import SettingsIcon from "~icons/eva/settings-2-outline"
 	import Playlists from "./Playlists.svelte"
-	import Settings from "./Settings.svelte"
+	// import Settings from "./Settings.svelte"
+	import Feed from "./Feed.svelte"
 
 	export const show = () => {
 		dialog.showModal()
-		playlists = fetchData()
+		promise = fetchData()
 		document.body.style.overflow = "hidden"
 	}
 	export const hide = () => {
@@ -17,50 +20,55 @@
 		document.body.style.removeProperty("overflow")
 	}
 
-	/** @typedef {import("./data").Playlist} Playlist */
+	async function fetchData() {
+		return getPlaylists()
+	}
 
 	/** @type {HTMLDialogElement} */
 	let dialog
 
-	/** @type {Promise<Playlist[]>} */
-	let playlists = new Promise(() => {})
+	/** @type {ReturnType<typeof fetchData>} */
+	let promise = new Promise(() => {})
 </script>
 
 <dialog id="sub2lists-popup" bind:this={dialog} on:close={hide}>
-	<TabView initial="playlists">
+	<TabView initial={$defaultTab}>
 		<menu slot="tabs" let:selected let:select>
 			<button
 				class="tab"
-				class:selected={false && selected == "playlists"}
-				on:click={select("playlists")}
+				class:selected={selected == "feed"}
+				on:click={select("feed")}
 				autofocus
+			>
+				<PlaylistIcon />
+				Feed
+			</button>
+			<button
+				class="tab"
+				class:selected={selected == "playlists"}
+				on:click={select("playlists")}
 			>
 				<ListIcon />
 				Playlists
 			</button>
-			<!-- <button
-				class="tab"
-				class:selected={selected == "settings"}
-				on:click={select("settings")}
-			>
-				<SettingsIcon />
-				Settings
-			</button> -->
 			<button class="tab tab-close" on:click={hide}>
 				<CloseIcon height="3rem" width="3rem" />
 			</button>
 		</menu>
 		<svelte:fragment let:selected slot="contents">
-			<div id="playlists" class:hidden={selected != "playlists"}>
-				{#await playlists}
-					<p>Loading...</p>
-				{:then playlists}
+			{#await promise}
+				<p class="message">Loading...</p>
+			{:then playlists}
+				{#if selected == "feed"}
+					<Feed {playlists} />
+				{:else if selected == "playlists"}
 					<Playlists {playlists} />
-				{:catch error}
-					<p>Error!</p>
-				{/await}
-			</div>
-			<div id="settings" class:hidden={selected != "settings"}><Settings /></div>
+				{:else}
+					<!-- <Settings /> -->
+				{/if}
+			{:catch error}
+				<p class="message">Error!</p>
+			{/await}
 		</svelte:fragment>
 	</TabView>
 </dialog>
@@ -87,6 +95,7 @@
 		height: 90%;
 		font-size: 1.2rem;
 		padding: 0;
+		overflow: hidden;
 	}
 	dialog * {
 		scrollbar-width: thin;
@@ -125,21 +134,9 @@
 	menu button:hover {
 		background-color: var(--yt-spec-badge-chip-background);
 	}
-
-	#playlists {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-		overflow-y: auto;
-		height: 100%;
-		padding: 2rem 1rem;
-	}
-	#playlists p {
+	.message {
 		text-align: center;
 		margin-top: 5rem;
 		font-size: 3rem;
-	}
-	.hidden {
-		display: none !important;
 	}
 </style>
