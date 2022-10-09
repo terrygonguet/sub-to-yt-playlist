@@ -3,7 +3,8 @@
 	import FlipIcon from "~icons/eva/flip-2-fill"
 	import EyeIcon from "~icons/eva/eye-outline"
 	import EyeClosedIcon from "~icons/eva/eye-off-outline"
-	import { hiddenIDs, reversedIDs, toggleID } from "./stores"
+	import { hiddenIDs, reversedIDs } from "./stores"
+	import { toggleID } from "./utils"
 
 	/** @typedef {import("./data").Video} Video */
 	/** @typedef {import("./data").Author} Author */
