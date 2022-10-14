@@ -16,3 +16,8 @@ export function seconds2str(seconds) {
 	seconds -= minutes * 60
 	return (hours ? hours + ":" : "") + minutes + ":" + seconds.toString().padStart(2, "0")
 }
+
+export function logAndPass(stuff) {
+	console.log(stuff)
+	return stuff
+}

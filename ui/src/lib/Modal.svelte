@@ -73,6 +73,7 @@
 			{:catch error}
 				{@debug error}
 				<p class="message">Error!</p>
+				<p class="message">{error.message}</p>
 			{/await}
 		</svelte:fragment>
 	</TabView>

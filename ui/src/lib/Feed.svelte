@@ -21,7 +21,7 @@
 			$cachedVideos[video.id] = video
 			video.published = new Date(video.published)
 		}
-		return videos.sort((a, b) => b.published.getTime() - a.published.getTime())
+		return videos.sort((a, b) => b.published.getTime() - a.published.getTime()).slice(0, 100)
 	}
 </script>
 
@@ -47,6 +47,7 @@
 	{:catch error}
 		{@debug error}
 		<p class="message">Error!</p>
+		<p class="message">{error.message}</p>
 	{/await}
 </div>
 

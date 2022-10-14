@@ -1,5 +1,6 @@
+import { pLimit } from "plimit-lit"
 import { Innertube } from "youtubei.js"
-import { seconds2str } from "./utils"
+import { logAndPass, seconds2str } from "./utils"
 
 /**
  * @typedef {Object} Playlist
@@ -39,6 +40,7 @@ const youtube = await Innertube.create({
 	cookie: document.cookie,
 	fetch: (...args) => fetch(...args),
 })
+const limit = pLimit(10)
 
 export async function getPlaylists() {
 	const library = await youtube.getLibrary()
@@ -68,7 +70,11 @@ export async function removeFromWatchLater(id) {
 export async function getVideos(playlists, cache = {}) {
 	const videoIds = playlists.flatMap(p => p.videos).map(v => v.id)
 	const videos = await Promise.all(
-		videoIds.map(id => cache[id] ?? youtube.getInfo(id).then(massageDetailedVideo)),
+		videoIds.map(
+			id =>
+				cache[id] ??
+				limit(() => youtube.getInfo(id).then(logAndPass).then(massageDetailedVideo)),
+		),
 	)
 	return videos
 }
