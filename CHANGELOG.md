@@ -1,3 +1,7 @@
+## 1.1.1
+
+-   Fix feed breaking with too many videos
+
 ## 1.1.0
 
 -   Add "Feed" tab to look like the Subscriptions feed
