@@ -1,3 +1,7 @@
+## 1.1.2
+
+-   Adapt to new Youtube UI
+
 ## 1.1.1
 
 -   Fix feed breaking with too many videos
