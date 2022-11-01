@@ -12,7 +12,7 @@ let menuItemMini
 let popup
 
 function ensureUIExists() {
-	const isLoggedIn = document.querySelectorAll("[aria-label='Sign in']").length == 0
+	const isLoggedIn = document.querySelectorAll("#sign-in-button").length == 0
 	if (!isLoggedIn) {
 		menuItem?.$destroy()
 		menuItemMini?.$destroy()
@@ -25,7 +25,11 @@ function ensureUIExists() {
 	}
 	const containerMini = document.querySelector("ytd-mini-guide-renderer #items")
 	if (containerMini && !containerMini.querySelector("#sub2lists-menuitem-mini")) {
-		menuItemMini = new MenuItemMini({ target: containerMini, anchor: containerMini.lastChild })
+		menuItemMini = new MenuItemMini({
+			target: containerMini,
+			anchor:
+				containerMini.querySelector("[aria-label='Library']") ?? containerMini.lastChild,
+		})
 		menuItemMini.$on("click", () => popup.show())
 	}
 	if (!popup) {

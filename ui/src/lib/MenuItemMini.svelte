@@ -17,11 +17,14 @@
 
 <style>
 	.ytd-mini-guide-renderer {
-		background-color: var(--yt-spec-brand-background-solid);
+		border-radius: 10px;
 	}
 	.ytd-mini-guide-renderer:hover {
 		background-color: var(--yt-spec-badge-chip-background);
 		outline: none;
+	}
+	#endpoint {
+		width: 64px;
 	}
 	#wrapper {
 		width: 24px;
