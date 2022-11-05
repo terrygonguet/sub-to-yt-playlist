@@ -1,3 +1,7 @@
+## 1.1.3
+
+-   Revert to old Youtube UI apparently
+
 ## 1.1.2
 
 -   Adapt to new Youtube UI
