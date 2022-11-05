@@ -19,16 +19,17 @@
 </div>
 
 <style>
-	#sub2lists-menuitem {
+	/* #sub2lists-menuitem {
 		width: calc(100% - 12px);
 		border-radius: 10px;
-	}
+	} */
 	a {
 		text-decoration: none;
 		color: var(--yt-spec-text-primary);
 	}
 	#wrapper {
-		padding: 0 12px;
+		/* padding: 0 12px; */
+		padding: 0 24px;
 		min-width: 0;
 		height: var(--paper-item-min-height, 48px);
 		display: flex;

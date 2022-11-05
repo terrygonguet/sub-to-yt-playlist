@@ -16,16 +16,16 @@
 </div>
 
 <style>
-	.ytd-mini-guide-renderer {
+	/* .ytd-mini-guide-renderer {
 		border-radius: 10px;
-	}
+	} */
 	.ytd-mini-guide-renderer:hover {
 		background-color: var(--yt-spec-badge-chip-background);
 		outline: none;
 	}
-	#endpoint {
+	/* #endpoint {
 		width: 64px;
-	}
+	} */
 	#wrapper {
 		width: 24px;
 		height: 24px;
