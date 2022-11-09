@@ -18,20 +18,32 @@ function ensureUIExists() {
 		menuItemMini?.$destroy()
 		return
 	}
+
 	const container = document.querySelector("#sections #items")
 	if (container && !container.querySelector("#sub2lists-menuitem")) {
-		menuItem = new MenuItem({ target: container, anchor: container.lastChild })
+		const homeButton = container.firstChild
+		const useNewUI = homeButton?.hasAttribute("guide-refresh") ?? true
+		menuItem = new MenuItem({
+			target: container,
+			anchor: container.lastChild,
+			props: { useNewUI },
+		})
 		menuItem.$on("click", () => popup.show())
 	}
+
 	const containerMini = document.querySelector("ytd-mini-guide-renderer #items")
 	if (containerMini && !containerMini.querySelector("#sub2lists-menuitem-mini")) {
+		const homeButton = containerMini.firstChild
+		const useNewUI = homeButton?.hasAttribute("guide-refresh") ?? true
 		menuItemMini = new MenuItemMini({
 			target: containerMini,
 			anchor:
 				containerMini.querySelector("[aria-label='Library']") ?? containerMini.lastChild,
+			props: { useNewUI },
 		})
 		menuItemMini.$on("click", () => popup.show())
 	}
+
 	if (!popup) {
 		popup = new Modal({ target: document.body })
 	}

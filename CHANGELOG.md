@@ -1,6 +1,7 @@
 ## 1.1.4
 
 -   Fix feed crash when the same video was in multiple playlists
+-   We now detect UI style and adapt to it
 
 ## 1.1.3
 
