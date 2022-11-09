@@ -71,9 +71,7 @@ export async function getVideos(playlists, cache = {}) {
 	const videoIds = playlists.flatMap(p => p.videos).map(v => v.id)
 	const videos = await Promise.all(
 		videoIds.map(
-			id =>
-				cache[id] ??
-				limit(() => youtube.getInfo(id).then(logAndPass).then(massageDetailedVideo)),
+			id => cache[id] ?? limit(() => youtube.getInfo(id).then(massageDetailedVideo)),
 		),
 	)
 	return videos
