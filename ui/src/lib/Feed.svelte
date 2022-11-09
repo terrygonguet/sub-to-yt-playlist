@@ -40,7 +40,7 @@
 		</p>
 	{:then videos}
 		<div id="videos">
-			{#each videos as video (video.id)}
+			{#each videos as video}
 				<Video {...video} />
 			{/each}
 		</div>

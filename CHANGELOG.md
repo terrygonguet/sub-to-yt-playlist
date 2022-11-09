@@ -1,3 +1,7 @@
+## 1.1.4
+
+-   Fix feed crash when the same video was in multiple playlists
+
 ## 1.1.3
 
 -   Revert to old Youtube UI apparently
