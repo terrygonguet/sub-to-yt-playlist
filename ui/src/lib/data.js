@@ -45,7 +45,7 @@ const limit = pLimit(10)
 export async function getPlaylists() {
 	const library = await youtube.getLibrary()
 	/** @type {Playlist[]} */
-	const playlists = await Promise.all(library.playlists.contents.map(massagePlaylist))
+	const playlists = await Promise.all(library.playlists.map(massagePlaylist))
 	return playlists.filter(playlist => playlist.title != "Favorites")
 }
 
