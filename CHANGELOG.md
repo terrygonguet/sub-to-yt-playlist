@@ -1,3 +1,7 @@
+## 1.1.6
+
+-   We're now even more defensive when parsing in data from Youtube
+
 ## 1.1.5
 
 -   Fix "Make this the default tab" button not working on the Playlists tab
