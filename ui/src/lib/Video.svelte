@@ -63,7 +63,9 @@
 			<span id="duration">{duration}</span>
 		</div>
 		<span id="title" {title}>{title}</span>
-		<a id="author" href={author.url}>{author.name}</a>
+		{#if author}
+			<a id="author" href={author.url}>{author.name}</a>
+		{/if}
 		{#if published}
 			<span>{format(published)}</span>
 		{/if}
