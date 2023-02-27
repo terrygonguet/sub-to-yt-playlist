@@ -17,7 +17,7 @@
 </script>
 
 <div id="playlists">
-	<label id="default-tab" on:click={() => ($defaultTab = "playlist")}>
+	<label id="default-tab" on:click={() => ($defaultTab = "playlists")}>
 		Make this the default tab
 		<input type="checkbox" disabled checked={$defaultTab == "playlists"} />
 	</label>
