@@ -1,3 +1,8 @@
+## 1.1.5
+
+-   Fix "Make this the default tab" button not working on the Playlists tab
+-   Fix a crash caused by some videos not having authors apparently
+
 ## 1.1.4
 
 -   Fix feed crash when the same video was in multiple playlists
