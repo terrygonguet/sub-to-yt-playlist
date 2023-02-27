@@ -39,7 +39,10 @@
 
 <div>
 	<p id="title">
-		<a href={playlistURL}>{title}</a> - <a href={author.url}>by {author.name}</a>
+		<a href={playlistURL}>{title}</a>
+		{#if author}
+			- <a href={author.url}>by {author.name}</a>
+		{/if}
 		<button title="Reverse playlist order" on:click={reverse}><FlipIcon /></button>
 		{#if isHidden}
 			<button class="right" title="Show playlist" on:click={toggleHide}

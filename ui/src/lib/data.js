@@ -94,38 +94,61 @@ async function massagePlaylist(source) {
  * @returns {Video}
  */
 function massageVideo(source) {
-	return {
-		author: massageAuthor(source.author),
-		duration: source.duration.text,
-		id: source.id,
-		thumbnail: pickThumbnail(source.thumbnails),
-		title: source.title.text,
-	}
+	return source
+		? {
+				author: massageAuthor(source.author),
+				duration: source.duration.text,
+				id: source.id,
+				thumbnail: pickThumbnail(source.thumbnails),
+				title: source.title.text,
+		  }
+		: {
+				author: massageAuthor(undefined),
+				duration: "0:00",
+				id: "unknown",
+				thumbnail: "#",
+				title: "Unknown",
+		  }
 }
 
 /**
  * @returns {Author}
  */
 function massageAuthor(source) {
-	return {
-		id: source.id,
-		name: source.name,
-		url: source.url,
-	}
+	return source
+		? {
+				id: source.id,
+				name: source.name,
+				url: source.url,
+		  }
+		: {
+				id: "unknown",
+				name: "Unknown",
+				url: "#",
+		  }
 }
 
 /**
  * @returns {DetailedVideo}
  */
 function massageDetailedVideo(source) {
-	return {
-		id: source.basic_info.id,
-		title: source.basic_info.title,
-		duration: seconds2str(source.basic_info.duration),
-		thumbnail: pickThumbnail(source.basic_info.thumbnail),
-		author: source.basic_info.channel,
-		published: new Date(source.primary_info.published.text),
-	}
+	return source
+		? {
+				id: source.basic_info.id,
+				title: source.basic_info.title,
+				duration: seconds2str(source.basic_info.duration),
+				thumbnail: pickThumbnail(source.basic_info.thumbnail),
+				author: source.basic_info.channel,
+				published: new Date(source.primary_info.published.text),
+		  }
+		: {
+				id: "unknown",
+				title: "Unknown",
+				duration: "0:00",
+				thumbnail: "#",
+				author: massageAuthor(undefined),
+				published: new Date(0),
+		  }
 }
 
 /**
