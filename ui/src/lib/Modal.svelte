@@ -63,6 +63,14 @@
 				<ListIcon />
 				Playlists
 			</button>
+			<button
+				class="tab"
+				class:selected={selected == "settings"}
+				on:click={select("settings")}
+			>
+				<SettingsIcon />
+				Settings
+			</button>
 			<button class="tab tab-close" on:click={hide}>
 				<CloseIcon height="3rem" width="3rem" />
 			</button>
@@ -76,7 +84,7 @@
 				{:else if selected == "playlists"}
 					<Playlists {playlists} />
 				{:else}
-					<!-- <Settings /> -->
+					<Settings />
 				{/if}
 			{:catch error}
 				<div>
