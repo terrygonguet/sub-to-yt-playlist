@@ -11,6 +11,7 @@
 	"devDependencies": {
 		"@iconify-json/eva": "^1.1.6",
 		"@sveltejs/vite-plugin-svelte": "^2.0.3",
+		"@types/chrome": "^0.0.221",
 		"svelte": "^3.55.1",
 		"unplugin-icons": "^0.15.3",
 		"vite": "^4.1.4"
