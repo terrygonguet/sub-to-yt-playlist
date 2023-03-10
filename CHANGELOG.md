@@ -1,3 +1,9 @@
+## 1.2.0
+
+-   Added a "Settings" tab
+-   Added a way to change which account to get playlists from ("Account index" in Settings tab)
+-   Misc small style changes
+
 ## 1.1.6
 
 -   We're now even more defensive when parsing in data from Youtube
