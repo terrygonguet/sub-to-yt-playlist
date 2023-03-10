@@ -1,28 +1,36 @@
 <script>
-	import { getPlaylists } from "./data"
+	import { getPlaylists, innertube } from "./data"
 	import { defaultTab } from "./stores"
 	import TabView from "./TabView.svelte"
 	import CloseIcon from "~icons/eva/close-fill"
 	import ListIcon from "~icons/eva/list-fill"
 	import PlaylistIcon from "./svg/PlaylistIcon.svelte"
-	// import SettingsIcon from "~icons/eva/settings-2-outline"
+	import SettingsIcon from "~icons/eva/settings-2-outline"
 	import Playlists from "./Playlists.svelte"
-	// import Settings from "./Settings.svelte"
+	import Settings from "./Settings.svelte"
 	import Feed from "./Feed.svelte"
+
+	// we need to keep track of that cause dialog.open is not reactive
+	// and I don't want to write a store wrapper around it
+	let open = false
 
 	export const show = () => {
 		dialog.showModal()
+		open = true
 		selected = $defaultTab
-		promise = fetchData()
 		document.body.style.overflow = "hidden"
 	}
 	export const hide = () => {
 		dialog.close()
+		open = false
 		document.body.style.removeProperty("overflow")
 	}
 
-	async function fetchData() {
-		return getPlaylists()
+	/**
+	 * @param {import("youtubei.js").Innertube} youtube
+	 */
+	async function fetchData(youtube) {
+		return getPlaylists(youtube)
 	}
 
 	/** @type {string} */
@@ -32,7 +40,7 @@
 	let dialog
 
 	/** @type {ReturnType<typeof fetchData>} */
-	let promise = new Promise(() => {})
+	$: promise = $innertube && open ? fetchData($innertube) : new Promise(() => {})
 </script>
 
 <dialog id="sub2lists-popup" bind:this={dialog} on:close={hide}>

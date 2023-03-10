@@ -1,5 +1,5 @@
 <script>
-	import { getVideos } from "./data"
+	import { getVideos, innertube } from "./data"
 	import { cachedVideos, defaultTab, hiddenIDs } from "./stores"
 	import Video from "./Video.svelte"
 
@@ -9,14 +9,15 @@
 	export let playlists = []
 
 	$: processed = playlists.filter(p => !$hiddenIDs.includes(p.id))
-	$: promise = fetchData(processed)
+	$: promise = fetchData($innertube, processed)
 	$: numCached = Object.keys($cachedVideos).length
 
 	/**
+	 * @param {import("youtubei.js").Innertube} youtube
 	 * @param {Playlist[]} playlists
 	 */
-	async function fetchData(playlists) {
-		const videos = await getVideos(playlists, $cachedVideos)
+	async function fetchData(youtube, playlists) {
+		const videos = await getVideos(youtube, playlists, $cachedVideos)
 		for (const video of videos) {
 			$cachedVideos[video.id] = video
 			video.published = new Date(video.published)

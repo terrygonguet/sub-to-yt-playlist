@@ -1,4 +1,6 @@
 import { pLimit } from "plimit-lit"
+import { accountIndex } from "./stores"
+import { readable } from "svelte/store"
 import { Innertube } from "youtubei.js"
 import { logAndPass, seconds2str } from "./utils"
 
@@ -36,38 +38,53 @@ import { logAndPass, seconds2str } from "./utils"
  * @property {string} url
  */
 
-const youtube = await Innertube.create({
-	cookie: document.cookie,
-	fetch: (...args) => fetch(...args),
+/** @type {import("svelte/store").Readable<Innertube>} */
+export const innertube = readable(null, set => {
+	const cleanup = accountIndex.subscribe($accountIndex =>
+		Innertube.create({
+			cookie: document.cookie,
+			account_index: $accountIndex,
+			fetch: (...args) => fetch(...args),
+		}).then(set),
+	)
+	return cleanup
 })
 const limit = pLimit(10)
 
-export async function getPlaylists() {
+/**
+ * @param {Innertube} youtube
+ */
+export async function getPlaylists(youtube) {
 	const library = await youtube.getLibrary()
 	/** @type {Playlist[]} */
-	const playlists = await Promise.all(library.playlists.map(massagePlaylist))
+	const playlists = await Promise.all(
+		library.playlists.map(data => massagePlaylist(youtube, data)),
+	)
 	return playlists.filter(playlist => playlist.title != "Favorites")
 }
 
 /**
+ * @param {Innertube} youtube
  * @param {string} id
  */
-export async function addToWatchLater(id) {
-	await youtube.playlist.addVideos("WL", [id])
+export async function addToWatchLater(youtube, id) {
+	return youtube.playlist.addVideos("WL", [id])
 }
 
 /**
+ * @param {Innertube} youtube
  * @param {string} id
  */
-export async function removeFromWatchLater(id) {
-	await youtube.playlist.removeVideos("WL", [id])
+export async function removeFromWatchLater(youtube, id) {
+	return youtube.playlist.removeVideos("WL", [id])
 }
 
 /**
+ * @param {Innertube} youtube
  * @param {Playlist[]} playlists
  * @param {Object<string, DetailedVideo>} cache
  */
-export async function getVideos(playlists, cache = {}) {
+export async function getVideos(youtube, playlists, cache = {}) {
 	const videoIds = playlists.flatMap(p => p.videos).map(v => v.id)
 	const videos = await Promise.all(
 		videoIds.map(
@@ -78,9 +95,10 @@ export async function getVideos(playlists, cache = {}) {
 }
 
 /**
+ * @param {Innertube} youtube
  * @returns {Promise<Playlist>}
  */
-async function massagePlaylist(source) {
+async function massagePlaylist(youtube, source) {
 	const playlist = await youtube.getPlaylist(source.id)
 	return {
 		author: massageAuthor(source.author),
