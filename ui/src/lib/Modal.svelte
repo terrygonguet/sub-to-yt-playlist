@@ -106,7 +106,7 @@
 		box-sizing: border-box;
 	}
 
-	dialog {
+	#sub2lists-popup {
 		position: fixed;
 		background: var(--yt-spec-general-background-a);
 		color: var(--yt-spec-text-primary);
@@ -117,8 +117,8 @@
 		padding: 0;
 		overflow: hidden;
 	}
-	dialog::backdrop {
-		background-color: rgba(0, 0, 0, 0.25);
+	#sub2lists-popup::backdrop {
+		background: rgba(0, 0, 0, 0.75);
 	}
 
 	menu {

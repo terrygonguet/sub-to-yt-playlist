@@ -17,10 +17,10 @@
 </script>
 
 <div id="playlists">
-	<label id="default-tab" on:click={() => ($defaultTab = "playlists")}>
+	<button id="default-tab" on:click={() => ($defaultTab = "playlists")}>
 		Make this the default tab
 		<input type="checkbox" disabled checked={$defaultTab == "playlists"} />
-	</label>
+	</button>
 
 	{#each processed as playlist (playlist.id)}
 		<Playlist {...playlist} />
@@ -48,6 +48,9 @@
 		padding: 2rem 1rem;
 	}
 	#default-tab {
+		background: transparent;
+		border: none;
+		color: inherit;
 		align-self: flex-end;
 		cursor: pointer;
 		margin-bottom: -2rem;

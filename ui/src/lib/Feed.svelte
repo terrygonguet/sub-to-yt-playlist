@@ -27,10 +27,10 @@
 </script>
 
 <div id="feed">
-	<label id="default-tab" on:click={() => ($defaultTab = "feed")}>
+	<button id="default-tab" on:click={() => ($defaultTab = "feed")}>
 		Make this the default tab
 		<input type="checkbox" disabled checked={$defaultTab == "feed"} />
-	</label>
+	</button>
 
 	{#await promise}
 		<p class="message">
@@ -62,6 +62,9 @@
 	}
 
 	#default-tab {
+		background: transparent;
+		border: none;
+		color: inherit;
 		align-self: flex-end;
 		cursor: pointer;
 	}
