@@ -1,5 +1,5 @@
 <script>
-	import { addToWatchLater, removeFromWatchLater } from "./data"
+	import { addToWatchLater, innertube, removeFromWatchLater } from "./data"
 
 	/** @typedef {import("./data").Author} Author */
 
@@ -23,10 +23,10 @@
 	 */
 	async function watchLater() {
 		if (this.dataset.added) {
-			await removeFromWatchLater(id)
+			await removeFromWatchLater($innertube, id)
 			delete this.dataset.added
 		} else {
-			await addToWatchLater(id)
+			await addToWatchLater($innertube, id)
 			this.dataset.added = "true"
 		}
 	}
