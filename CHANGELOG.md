@@ -1,3 +1,7 @@
+## 1.2.1
+
+-   Fix "Add to watch later" buttons
+
 ## 1.2.0
 
 -   Added a "Settings" tab
