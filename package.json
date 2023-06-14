@@ -1,0 +1,15 @@
+{
+	"name": "sub2lists",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev:src": "zx dev.mjs",
+		"dev:ui": "cd ui && npm run dev",
+		"dev:ext": "web-ext run -s dist",
+		"build": "zx build.mjs"
+	},
+	"devDependencies": {
+		"chokidar": "^3.5.3",
+		"web-ext": "^7.6.2"
+	}
+}
