@@ -1,3 +1,7 @@
+## 1.3.0
+
+-   Adapt buttons for the newest Youtube UI
+
 ## 1.2.1
 
 -   Fix "Add to watch later" buttons
