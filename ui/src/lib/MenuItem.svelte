@@ -1,44 +1,40 @@
 <script>
 	import PlaylistIcon from "./svg/PlaylistIcon.svelte"
-
-	export let useNewUI = true
 </script>
 
-<div id="sub2lists-menuitem" class="title ytd-guide-entry-renderer" class:ui-new={useNewUI}>
-	<a
-		href="/feed/playlists"
-		class="yt-simple-endpoint style-scope ytd-guide-entry-renderer"
-		id="endpoint"
-		on:click|preventDefault
-	>
-		<div id="wrapper">
-			<div id="icon">
-				<PlaylistIcon />
-			</div>
-			Playlists
+<button id="sub2lists-menuitem" class="ytd-guide-entry-renderer" on:click|preventDefault>
+	<div class="yt-simple-endpoint style-scope ytd-guide-entry-renderer" id="endpoint">
+		<div id="icon">
+			<PlaylistIcon />
 		</div>
-	</a>
-</div>
+		Playlists
+	</div>
+</button>
 
 <style>
-	#sub2lists-menuitem.ui-new {
-		width: calc(100% - 12px);
-		border-radius: 10px;
-	}
-	a {
-		text-decoration: none;
+	#sub2lists-menuitem {
+		min-height: var(--paper-item-min-height, 48px);
+		cursor: pointer;
+		box-sizing: border-box;
+		outline: 0;
 		color: var(--yt-spec-text-primary);
+		border: none;
+		padding: 0;
+		background: transparent;
+		display: block;
+		position: relative;
+		border-radius: 10px;
+		width: calc(100% - 12px);
 	}
-	#wrapper {
-		padding: 0 24px;
-		min-width: 0;
-		height: var(--paper-item-min-height, 48px);
-		display: flex;
-		align-items: center;
-		color: var(--yt-spec-brand-icon-inactive);
-	}
-	.ui-new #wrapper {
+	#endpoint {
 		padding: 0 12px;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 24px;
 	}
 	#icon {
 		width: 24px;

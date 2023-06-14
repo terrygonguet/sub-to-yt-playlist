@@ -1,36 +1,43 @@
 <script>
 	import PlaylistIcon from "./svg/PlaylistIcon.svelte"
-
-	export let useNewUI = true
 </script>
 
-<div
+<button
 	id="sub2lists-menuitem-mini"
 	class="style-scope ytd-mini-guide-renderer"
-	class:ui-new={useNewUI}
+	on:click|preventDefault
 >
-	<a
-		id="endpoint"
-		class="yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer"
-		on:click|preventDefault
-	>
+	<div id="endpoint" class="yt-simple-endpoint style-scope ytd-mini-guide-entry-renderer">
 		<div id="wrapper">
 			<PlaylistIcon />
 		</div>
 		Playlists
-	</a>
-</div>
+	</div>
+</button>
 
 <style>
-	.ui-new.ytd-mini-guide-renderer {
-		border-radius: 10px;
+	#sub2lists-menuitem-mini {
+		padding: 0;
+		border: none;
+		background: transparent;
 	}
-	.ytd-mini-guide-renderer:hover {
+	#sub2lists-menuitem-mini:hover {
 		background-color: var(--yt-spec-badge-chip-background);
 		outline: none;
 	}
-	.ui-new #endpoint {
+	.ytd-mini-guide-renderer:hover {
+		border-radius: 10px;
+		background-color: var(--yt-spec-badge-chip-background);
+		outline: none;
+	}
+	#endpoint {
 		width: 64px;
+		padding: 16px 0 14px;
+		outline: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 	#wrapper {
 		width: 24px;
