@@ -1,3 +1,9 @@
+## 1.3.1
+
+-   Fix playlist author links pointing to nothing
+-   Update `youtubei.js` dependency
+-   Make buttons look more like youtube buttons
+
 ## 1.3.0
 
 -   Adapt buttons for the newest Youtube UI
