@@ -35,7 +35,7 @@ import { logAndPass, seconds2str } from "./utils"
  * @typedef {Object} Author
  * @property {string} id
  * @property {string} name
- * @property {string} url
+ * @property {string?} url
  */
 
 /** @type {import("svelte/store").Readable<Innertube>} */
@@ -137,12 +137,12 @@ function massageAuthor(source) {
 		? {
 				id: source.id,
 				name: source.name,
-				url: source.url,
+				url: source.url.endsWith("/u/undefined") ? undefined : source.url,
 		  }
 		: {
 				id: "unknown",
 				name: "Unknown",
-				url: "#",
+				url: undefined,
 		  }
 }
 
