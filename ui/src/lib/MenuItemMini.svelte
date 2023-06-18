@@ -20,6 +20,10 @@
 		padding: 0;
 		border: none;
 		background: transparent;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.4rem;
+		font-family: "Roboto", "Arial", sans-serif;
 	}
 	#sub2lists-menuitem-mini:hover {
 		background-color: var(--yt-spec-badge-chip-background);

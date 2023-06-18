@@ -25,6 +25,7 @@
 		position: relative;
 		border-radius: 10px;
 		width: calc(100% - 12px);
+		font-family: "Roboto", "Arial", sans-serif;
 	}
 	#endpoint {
 		padding: 0 12px;
@@ -32,9 +33,9 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		font-size: 16px;
+		font-size: 1.4rem;
+		line-height: 2rem;
 		font-weight: 400;
-		line-height: 24px;
 	}
 	#icon {
 		width: 24px;
