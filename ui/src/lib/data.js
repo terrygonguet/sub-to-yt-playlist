@@ -99,12 +99,21 @@ export async function getVideos(youtube, playlists, cache = {}) {
  * @returns {Promise<Playlist>}
  */
 async function massagePlaylist(youtube, source) {
-	const playlist = await youtube.getPlaylist(source.id)
-	return {
-		author: massageAuthor(source.author),
-		id: source.id,
-		title: source.title.text,
-		videos: playlist.items.map(massageVideo).reverse(),
+	if (source.id) {
+		const playlist = await youtube.getPlaylist(source.id)
+		return {
+			author: massageAuthor(source.author),
+			id: source.id,
+			title: source.title.text,
+			videos: playlist.items.map(massageVideo).reverse(),
+		}
+	} else {
+		return {
+			author: massageAuthor(undefined),
+			id: "unknown",
+			title: "Unknown",
+			videos: [],
+		}
 	}
 }
 
