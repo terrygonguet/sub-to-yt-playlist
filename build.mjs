@@ -22,6 +22,7 @@ if (!argv.s && !argv["skip-build"]) {
 		await cd("ui")
 		await $`npm i`
 		await $`npm run build`
+		await cd("..")
 	})
 }
 
@@ -31,13 +32,13 @@ const args = ["-s dist", "-o", `-n youtube_sub2playlist-${version}.zip`]
 if (manifests.v3) {
 	echo(colorize("Building manifest V3 extension..."))
 	await fs.writeJSON("dist/manifest.json", manifest_v3, { spaces: "\t" })
-	await $`npx web-ext build ${args} -a manifest-v3-artifacts`
+	await $`npx -y web-ext build ${args} -a manifest-v3-artifacts`
 }
 
 if (manifests.v2) {
 	echo(colorize("Building manifest V2 extension..."))
 	await fs.writeJSON("dist/manifest.json", manifest_v2, { spaces: "\t" })
-	await $`npx web-ext build ${args} -a manifest-v2-artifacts`
+	await $`npx -y web-ext build ${args} -a manifest-v2-artifacts`
 }
 
 echo(colorize("Done!"))

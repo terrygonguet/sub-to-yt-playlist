@@ -21,7 +21,6 @@ function ensureUIExists() {
 
 	const container = document.querySelector("#sections #items")
 	if (container && !container.querySelector("#sub2lists-menuitem")) {
-		const homeButton = container.firstChild
 		menuItem = new MenuItem({
 			target: container,
 			anchor: container.lastChild,
@@ -31,7 +30,6 @@ function ensureUIExists() {
 
 	const containerMini = document.querySelector("ytd-mini-guide-renderer #items")
 	if (containerMini && !containerMini.querySelector("#sub2lists-menuitem-mini")) {
-		const homeButton = containerMini.firstChild
 		menuItemMini = new MenuItemMini({
 			target: containerMini,
 			anchor:
