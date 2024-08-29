@@ -2,7 +2,7 @@ import { pLimit } from "plimit-lit"
 import { accountIndex } from "./stores"
 import { readable } from "svelte/store"
 import { Innertube } from "youtubei.js"
-import { logAndPass, seconds2str } from "./utils"
+import { seconds2str } from "./utils"
 
 /**
  * @typedef {Object} Playlist
