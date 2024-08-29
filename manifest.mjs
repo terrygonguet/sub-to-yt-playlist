@@ -1,6 +1,10 @@
-export const version = "1.3.1"
+export const version = "1.3.2"
 
-export const web_accessible_resources = ["scripts/index.mjs", "scripts/loader.js", "scripts/ui.js"]
+export const web_accessible_resources = [
+	"scripts/index.mjs",
+	"scripts/loader.js",
+	"scripts/ui.js",
+]
 
 export const browser_specific_settings = {
 	gecko: {
