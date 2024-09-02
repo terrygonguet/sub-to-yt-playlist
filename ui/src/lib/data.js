@@ -1,8 +1,8 @@
 import { pLimit } from "plimit-lit"
 import { accountIndex } from "./stores"
-import { readable } from "svelte/store"
+import { derived, readable } from "svelte/store"
 import { Innertube } from "youtubei.js"
-import { seconds2str } from "./utils"
+import { fetchWithAccountIndex, seconds2str } from "./utils"
 
 /**
  * @typedef {Object} Playlist
@@ -38,37 +38,16 @@ import { seconds2str } from "./utils"
  * @property {string?} url
  */
 
-const fetchWithAccountIndex = (accountIndex, ...args) => {
-	const [url, options = {}] = args;
-	const dataSyncIds = [window.ytcfg.get('DELEGATED_SESSION_ID')];
-	const dataSyncIdsKeyExpression = /^(\d+)(?:\|\|(\d+))*(?:::yt-player::yt-player-lv)$/;
-
-	for (let i = 0; i < localStorage.length; i++) {
-		const key = localStorage.key(i);
-		const matches = key?.match(dataSyncIdsKeyExpression);
-		if (matches) {
-			dataSyncIds.push(...matches.slice(1).filter((id) => id !== dataSyncIds[0]));
-		}
-	}
-
-	const headers = new Headers(options.headers || {});
-	headers.set('X-Goog-AuthUser', window.ytcfg.get('SESSION_INDEX'));
-	if (dataSyncIds[accountIndex]) {
-		headers.set('X-Goog-PageId', dataSyncIds[accountIndex]);
-	}
-
-	return fetch(url, {...options, headers});
-};
-
 /** @type {import("svelte/store").Readable<Innertube>} */
-export const innertube = readable(null, set => {
-	const cleanup = accountIndex.subscribe($accountIndex =>
-		Innertube.create({
-			cookie: document.cookie,
-			fetch: (...args) => fetchWithAccountIndex($accountIndex, ...args),
-	}).then(set),
-	)
-	return cleanup
+export const innertube = derived(accountIndex, ($accountIndex, set) => {
+	Innertube.create({
+		cookie: document.cookie,
+		fetch: (url, options) =>
+			fetchWithAccountIndex(url, {
+				...options,
+				accountIndex: $accountIndex,
+			}),
+	}).then(set)
 })
 const limit = pLimit(10)
 
@@ -109,7 +88,9 @@ export async function getVideos(youtube, playlists, cache = {}) {
 	const videoIds = playlists.flatMap(p => p.videos).map(v => v.id)
 	const videos = await Promise.all(
 		videoIds.map(
-			id => cache[id] ?? limit(() => youtube.getInfo(id).then(massageDetailedVideo)),
+			id =>
+				cache[id] ??
+				limit(() => youtube.getInfo(id).then(massageDetailedVideo)),
 		),
 	)
 	return videos
@@ -167,7 +148,9 @@ function massageAuthor(source) {
 		? {
 				id: source.id,
 				name: source.name,
-				url: source.url.endsWith("/u/undefined") ? undefined : source.url,
+				url: source.url.endsWith("/u/undefined")
+					? undefined
+					: source.url,
 		  }
 		: {
 				id: "unknown",
