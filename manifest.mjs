@@ -1,4 +1,4 @@
-export const version = "1.3.2"
+export const version = "1.3.3"
 
 export const web_accessible_resources = [
 	"scripts/index.mjs",
