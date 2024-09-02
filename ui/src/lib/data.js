@@ -2,7 +2,7 @@ import { pLimit } from "plimit-lit"
 import { accountIndex } from "./stores"
 import { readable } from "svelte/store"
 import { Innertube } from "youtubei.js"
-import { logAndPass, seconds2str } from "./utils"
+import { seconds2str } from "./utils"
 
 /**
  * @typedef {Object} Playlist
@@ -38,14 +38,35 @@ import { logAndPass, seconds2str } from "./utils"
  * @property {string?} url
  */
 
+const fetchWithAccountIndex = (accountIndex, ...args) => {
+	const [url, options = {}] = args;
+	const dataSyncIds = [window.ytcfg.get('DELEGATED_SESSION_ID')];
+	const dataSyncIdsKeyExpression = /^(\d+)(?:\|\|(\d+))*(?:::yt-player::yt-player-lv)$/;
+
+	for (let i = 0; i < localStorage.length; i++) {
+		const key = localStorage.key(i);
+		const matches = key?.match(dataSyncIdsKeyExpression);
+		if (matches) {
+			dataSyncIds.push(...matches.slice(1).filter((id) => id !== dataSyncIds[0]));
+		}
+	}
+
+	const headers = new Headers(options.headers || {});
+	headers.set('X-Goog-AuthUser', window.ytcfg.get('SESSION_INDEX'));
+	if (dataSyncIds[accountIndex]) {
+		headers.set('X-Goog-PageId', dataSyncIds[accountIndex]);
+	}
+
+	return fetch(url, {...options, headers});
+};
+
 /** @type {import("svelte/store").Readable<Innertube>} */
 export const innertube = readable(null, set => {
 	const cleanup = accountIndex.subscribe($accountIndex =>
 		Innertube.create({
 			cookie: document.cookie,
-			account_index: $accountIndex,
-			fetch: (...args) => fetch(...args),
-		}).then(set),
+			fetch: (...args) => fetchWithAccountIndex($accountIndex, ...args),
+	}).then(set),
 	)
 	return cleanup
 })
