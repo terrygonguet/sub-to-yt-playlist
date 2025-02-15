@@ -1,3 +1,8 @@
+# 1.3.4
+
+-   Mirror changes to Youtube API & update Youtubei.js (thanks to
+    [Dave Nicolson](https://github.com/dnicolson))
+
 # 1.3.3
 
 -   Fix the "account index" option (thanks to
