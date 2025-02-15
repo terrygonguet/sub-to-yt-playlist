@@ -101,12 +101,13 @@ export async function getVideos(youtube, playlists, cache = {}) {
  * @returns {Promise<Playlist>}
  */
 async function massagePlaylist(youtube, source) {
-	if (source.id) {
-		const playlist = await youtube.getPlaylist(source.id)
+	if (source.content_id) {
+		const playlist = await youtube.getPlaylist(source.content_id)
+
 		return {
-			author: massageAuthor(source.author),
-			id: source.id,
-			title: source.title.text,
+			author: massageAuthor(playlist.info.author),
+			id: source.content_id,
+			title: source.metadata.title.text,
 			videos: playlist.items.map(massageVideo).reverse(),
 		}
 	} else {
@@ -135,7 +136,7 @@ function massageVideo(source) {
 				author: massageAuthor(undefined),
 				duration: "0:00",
 				id: "unknown",
-				thumbnail: "#",
+				thumbnail: {url: "#"},
 				title: "Unknown",
 		  }
 }
@@ -176,7 +177,7 @@ function massageDetailedVideo(source) {
 				id: "unknown",
 				title: "Unknown",
 				duration: "0:00",
-				thumbnail: "#",
+				thumbnail: {url: "#"},
 				author: massageAuthor(undefined),
 				published: new Date(0),
 		  }
