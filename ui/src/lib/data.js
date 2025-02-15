@@ -135,7 +135,7 @@ function massageVideo(source) {
 				author: massageAuthor(undefined),
 				duration: "0:00",
 				id: "unknown",
-				thumbnail: "#",
+				thumbnail: {url: "#"},
 				title: "Unknown",
 		  }
 }
@@ -176,7 +176,7 @@ function massageDetailedVideo(source) {
 				id: "unknown",
 				title: "Unknown",
 				duration: "0:00",
-				thumbnail: "#",
+				thumbnail: {url: "#"},
 				author: massageAuthor(undefined),
 				published: new Date(0),
 		  }
